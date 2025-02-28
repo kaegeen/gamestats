@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Stats Tracker</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+    <!-- Navigation Bar -->
+    <nav class="bg-purple-600 p-4 text-center">
+        <h1 class="text-white text-2xl font-bold">Game Stats Tracker</h1>
+    </nav>
+
+    <!-- Stats Tracking Section -->
+    <section class="py-16">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-2xl font-bold mb-8">Track Your Game Stats</h2>
+            <div class="max-w-lg mx-auto bg-white shadow-lg rounded-lg p-8">
+                <label for="game" class="block text-gray-700 font-bold mb-2">Select Game</label>
+                <select id="game" class="w-full p-3 border rounded-lg mb-4">
+                    <option value="">Choose a game</option>
+                    <option value="lol">League of Legends</option>
+                    <option value="csgo">CS:GO</option>
+                    <option value="valorant">Valorant</option>
+                    <option value="fortnite">Fortnite</option>
+                </select>
+                
+                <label for="username" class="block text-gray-700 font-bold mb-2">Enter Username</label>
+                <input type="text" id="username" class="w-full p-3 border rounded-lg mb-4" placeholder="Enter your in-game username">
+                
+                <button onclick="fetchGameStats()" class="w-full px-4 py-2 bg-purple-600 text-white font-bold rounded-lg hover:bg-purple-700">
+                    Get Stats
+                </button>
+            </div>
+            <div id="statsResults" class="mt-8 max-w-lg mx-auto bg-white shadow-lg p-6 rounded-lg hidden">
+                <h3 class="text-xl font-bold">Stats for <span id="playerName"></span> in <span id="selectedGame"></span></h3>
+                <ul id="statsList" class="text-gray-700 mt-4 list-disc list-inside"></ul>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        async function fetchGameStats() {
+            const game = document.getElementById('game').value;
+            const username = document.getElementById('username').value.trim();
+            
+            if (!game || !username) {
+                alert('Please select a game and enter a username.');
+                return;
+            }
+            
+            document.getElementById('playerName').innerText = username;
+            document.getElementById('selectedGame').innerText = game;
+            
+            // Simulated API response (Replace with actual API call)
+            const sampleStats = {
+                "lol": ["Rank: Diamond", "Wins: 200", "KDA: 3.5"],
+                "csgo": ["Rank: Global Elite", "Kills: 5000", "Win Rate: 60%"],
+                "valorant": ["Rank: Immortal", "Headshot %: 40%", "Matches Played: 300"],
+                "fortnite": ["Victory Royales: 50", "Total Matches: 1000", "Top 10s: 300"]
+            };
+            
+            const stats = sampleStats[game] || ["No data available."];
+            
+            const statsList = document.getElementById('statsList');
+            statsList.innerHTML = "";
+            stats.forEach(stat => {
+                const li = document.createElement('li');
+                li.textContent = stat;
+                statsList.appendChild(li);
+            });
+            
+            document.getElementById('statsResults').classList.remove('hidden');
+        }
+    </script>
+
+    <!-- Footer -->
+    <footer class="bg-purple-600 text-white text-center py-4">
+        <p>&copy; 2025 Game Stats Tracker. All rights reserved.</p>
+    </footer>
+</body>
+</html>
